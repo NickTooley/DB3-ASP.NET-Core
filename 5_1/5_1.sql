@@ -95,7 +95,7 @@ GO
 SELECT publishers.pub_name, COUNT(titles.title_id) as "Num Books"
 FROM publishers
 JOIN titles ON titles.pub_id = publishers.pub_id
-WHERE publishers.state != 'California'
+WHERE publishers.state != 'CA'
 GROUP BY publishers.pub_name
 
 GO
