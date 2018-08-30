@@ -84,7 +84,7 @@ FROM titles
 JOIN sales ON sales.title_id = titles.title_id
 GROUP BY titles.title
 HAVING SUM(sales.qty) < (SELECT AVG(title_ave)
-							FROM (SELECT AVG(qty) AS title_ave
+							FROM (SELECT SUM(qty) AS title_ave
 									FROM sales
 									GROUP BY title_id) as t)
 
