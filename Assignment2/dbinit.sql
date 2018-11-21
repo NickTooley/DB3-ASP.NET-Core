@@ -18,49 +18,46 @@ IF OBJECT_ID('Locations') IS NOT NULL DROP TABLE Locations
 
 CREATE TABLE Person 
 (
-    personID            INT             IDENTITY(0,1),
+    personID            INT             IDENTITY(0,1) PRIMARY KEY,
     email               VARCHAR(60)     NOT NULL,
     firstName           VARCHAR(20)     NOT NULL,
     lastName            VARCHAR(30)     NOT NULL,
-    password            VARCHAR(150)    NOT NULL,
+    password            VARCHAR(150)    ,
     DOB                 DATE            NOT NULL,
-
-    Constraint Person_PK PRIMARY KEY(personID)                           
+                          
 )
 
 CREATE TABLE Ensembles
 (
-    ensembleID          INT             IDENTITY(0,1),
+    ensembleID          INT             IDENTITY(0,1) PRIMARY KEY,
 	ensembleName		VARCHAR(30)	    NOT NULL,
 
-	Constraint Ensembles_PK PRIMARY KEY(ensembleName),
 )
 
 CREATE TABLE EnsembleMusicians
 (
     ensembleID          INT             NOT NULL,
     personID            INT             NOT NULL,
-
-    Constraint Ensemble_Musician_FK (ensembleID) REFERENCES Ensembles(ensembleID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Constraint Person_Ensemble_FK (personID) REFERENCES Person(personID) ON DELETE CASCADE ON UPDATE CASCADE 
+	
+	PRIMARY KEY (ensembleID,personID),
+    Constraint Ensemble_Musician_FK FOREIGN KEY (ensembleID) REFERENCES Ensembles(ensembleID) ON DELETE CASCADE ON UPDATE CASCADE,
+    Constraint Person_Ensemble_FK FOREIGN KEY (personID) REFERENCES Person(personID) ON DELETE CASCADE ON UPDATE CASCADE 
 )
 
 CREATE TABLE Students
 (
-    studentID           INT             IDENTITY(0,1),
+    studentID           INT             IDENTITY(0,1) PRIMARY KEY,
     personID            INT             NOT NULL,
 
-    Constraint StudentID_PK PRIMARY KEY(studentID),
-    Constraint Student_Person_FK (personID) REFERENCES Person(personID) ON DELETE CASCADE ON UPDATE CASCADE
+    Constraint Student_Person_FK FOREIGN KEY (personID) REFERENCES Person(personID) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 CREATE TABLE Tutors
 (
-    tutorID             INT             IDENTITY(0,1),
+    tutorID             INT             IDENTITY(0,1) PRIMARY KEY,
     personID            INT             NOT NULL,
 
-    Constraint TutorID_PK PRIMARY KEY(tutorID),
-    Constraint Tutor_Person_FK (personID) REFERENCES Person(personID) ON DELETE CASCADE ON UPDATE CASCADE
+    Constraint Tutor_Person_FK FOREIGN KEY (personID) REFERENCES Person(personID) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 CREATE TABLE StudentGuardians
@@ -71,12 +68,12 @@ CREATE TABLE StudentGuardians
     contactPhone        VARCHAR(20)     NOT NULL,
     email               VARCHAR(60)     NOT NULL,
 
-    Constraint Student_Guardians_FK (studentID) REFERENCES Students(studentID) ON DELETE CASCADE ON UPDATE CASCADE
+    Constraint Student_Guardians_FK FOREIGN KEY (studentID) REFERENCES Students(studentID) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 CREATE TABLE Instruments
 (
-    instrumentID        INT             IDENTITY(0,1),
+    instrumentID        INT             IDENTITY(0,1) PRIMARY KEY,
     headTutorID         INT             NOT NULL,
     maxClassSize        INT             NOT NULL,
     inventoryNumber     INT             NOT NULL,
@@ -84,8 +81,7 @@ CREATE TABLE Instruments
     studentFee          SMALLMONEY      ,
     hireFee             SMALLMONEY      ,
 
-    Constraint Instrument_PK PRIMARY KEY(instrumentID),
-    Constraint Instrument_Head_Tutor_FK (headTutorID) REFERENCES Tutors(tutorID) ON DELETE CASCADE ON UPDATE CASCADE
+    Constraint Instrument_Head_Tutor_FK FOREIGN KEY (headTutorID) REFERENCES Tutors(tutorID) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 CREATE TABLE InstrumentHire
@@ -93,16 +89,16 @@ CREATE TABLE InstrumentHire
     studentID           INT             NOT NULL,
     instrumentID        INT             NOT NULL,
 
-    Constraint Instrument_Hire_Student_FK (ensembleID) REFERENCES Ensembles(ensembleID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Constraint Instrument_Hire_Instrument_FK (personID) REFERENCES Persons(personID) ON DELETE CASCADE ON UPDATE CASCADE 
+	PRIMARY KEY(studentID, instrumentID),
+    Constraint Instrument_Hire_Student_FK FOREIGN KEY (studentID) REFERENCES Students(studentID) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    Constraint Instrument_Hire_Instrument_FK FOREIGN KEY (instrumentID) REFERENCES Instruments(instrumentID) ON DELETE CASCADE ON UPDATE CASCADE 
 )
 
 CREATE TABLE Seniority
 (
-    seniorityID         INT             IDENTITY(0,1),
+    seniorityID         INT             IDENTITY(0,1) PRIMARY KEY,
     seniorityName       VARCHAR(20)     NOT NULL,
 
-    Constraint Seniority_PK PRIMARY KEY(seniorityID)
 )
 
 CREATE TABLE PayScales
@@ -110,9 +106,10 @@ CREATE TABLE PayScales
     seniorityID         INT             NOT NULL,
     instrumentID        INT             NOT NULL,
     pay                 SMALLMONEY      NOT NULL,
-
-    Constraint Payscales_Seniority_FK (seniorityID) REFERENCES Seniority(seniorityID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Constraint Payscales_Instrument_FK (instrumentID) REFERENCES Instruments(instrumentID) ON DELETE CASCADE ON UPDATE CASCADE 
+	
+	PRIMARY KEY (seniorityID,instrumentID),
+    Constraint Payscales_Seniority_FK FOREIGN KEY (seniorityID) REFERENCES Seniority(seniorityID) ON DELETE CASCADE ON UPDATE CASCADE,
+    Constraint Payscales_Instrument_FK FOREIGN KEY (instrumentID) REFERENCES Instruments(instrumentID) ON DELETE CASCADE ON UPDATE CASCADE 
 )
 
 CREATE TABLE InstrumentTutors
@@ -121,21 +118,21 @@ CREATE TABLE InstrumentTutors
     instrumentID        INT             NOT NULL,
     seniorityID         INT             NOT NULL,
 
-    Constraint Instrument_Tutors_Tutor_FK (tutorID) REFERENCES Tutors(tutorID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Constraint Instrument_Tutors_Instrument_FK (instrumentID) REFERENCES Instruments(instrumentID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Constraint Instrument_Tutors_Seniority_FK (seniorityID) REFERENCES Seniority(seniorityID) ON DELETE CASCADE ON UPDATE CASCADE 
+	PRIMARY KEY (tutorID,instrumentID, seniorityID),
+    Constraint Instrument_Tutors_Tutor_FK FOREIGN KEY (tutorID) REFERENCES Tutors(tutorID) ON DELETE CASCADE ON UPDATE CASCADE,
+    Constraint Instrument_Tutors_Instrument_FK FOREIGN KEY (instrumentID) REFERENCES Instruments(instrumentID) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    Constraint Instrument_Tutors_Seniority_FK FOREIGN KEY (seniorityID) REFERENCES Seniority(seniorityID) ON DELETE CASCADE ON UPDATE CASCADE 
 )
 
 CREATE TABLE Classes
 (
-    classID             INT             IDENTITY(0,1),
+    classID             INT             IDENTITY(0,1) PRIMARY KEY,
     instrumentID        INT             NOT NULL,
     tutorID             INT             NOT NULL,
     lessonLevel         INT             NOT NULL,
 
-    Constraint Classes_PK PRIMARY KEY(classID),
-    Constraint Classes_Instrument_FK (instrumentID) REFERENCES Instruments(instrumentID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Constraint Classes_Tutor_FK (tutorID) REFERENCES Tutors(tutorID) ON DELETE CASCADE ON UPDATE CASCADE
+    Constraint Classes_Instrument_FK FOREIGN KEY (instrumentID) REFERENCES Instruments(instrumentID) ON DELETE CASCADE ON UPDATE CASCADE,
+    Constraint Classes_Tutor_FK FOREIGN KEY (tutorID) REFERENCES Tutors(tutorID) ON DELETE NO ACTION ON UPDATE NO ACTION
 )
 
 CREATE TABLE ClassList
@@ -143,16 +140,16 @@ CREATE TABLE ClassList
     classID             INT             NOT NULL,
     studentID           INT             NOT NULL,
 
-    Constraint Classlist_Class_FK (classID) REFERENCES Classes(classID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Constraint Classlist_Student_FK (studentID) REFERENCES Students(studentID) ON DELETE CASCADE ON UPDATE CASCADE 
+	PRIMARY KEY (classID,studentID),
+    Constraint Classlist_Class_FK FOREIGN KEY (classID) REFERENCES Classes(classID) ON DELETE CASCADE ON UPDATE CASCADE,
+    Constraint Classlist_Student_FK FOREIGN KEY (studentID) REFERENCES Students(studentID) ON DELETE NO ACTION ON UPDATE NO ACTION 
 )
 
 CREATE TABLE Music
 (
-    musicID             INT             IDENTITY(0,1),
+    musicID             INT             IDENTITY(0,1) PRIMARY KEY,
     level               INT             NOT NULL,
 
-    Constraint Music_PK PRIMARY KEY(musicID)
 )
 
 CREATE TABLE MusicInstruments
@@ -160,26 +157,25 @@ CREATE TABLE MusicInstruments
     musicID             INT             NOT NULL,
     instrumentID        INT             NOT NULL,
 
-    Constraint MusicInstruments_Music_FK (musicID) REFERENCES Music(musicID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Constraint MusicInstruments_Instrument_FK (instrumentID) REFERENCES Instruments(instrumentID) ON DELETE CASCADE ON UPDATE CASCADE 
+	PRIMARY KEY (musicID,instrumentID),
+    Constraint MusicInstruments_Music_FK FOREIGN KEY (musicID) REFERENCES Music(musicID) ON DELETE CASCADE ON UPDATE CASCADE,
+    Constraint MusicInstruments_Instrument_FK FOREIGN KEY (instrumentID) REFERENCES Instruments(instrumentID) ON DELETE CASCADE ON UPDATE CASCADE 
 )
 
 CREATE TABLE Locations
 (
-    locationID          INT             IDENTITY(0,1),
+    locationID          INT             IDENTITY(0,1) PRIMARY KEY,
     address             VARCHAR(80)     NOT NULL,
     name                VARCHAR(50)     NOT NULL,
 
-    Constraint Locations_PK PRIMARY KEY(locationID)
 )
 
 CREATE TABLE Performances
 (
-    performanceID       INT             IDENTITY(0,1),
+    performanceID       INT             IDENTITY(0,1) PRIMARY KEY,
     locationID          INT             NOT NULL,
 
-    Constraint Performances_PK PRIMARY KEY(performanceID),
-    Constraint Performances_Location_FK (locationID) REFERENCES Locations(locationID) ON DELETE CASCADE ON UPDATE CASCADE
+    Constraint Performances_Location_FK FOREIGN KEY (locationID) REFERENCES Locations(locationID) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 CREATE TABLE PerformanceMusic
@@ -188,10 +184,12 @@ CREATE TABLE PerformanceMusic
     musicID             INT             NOT NULL,
     ensembleID          INT             NOT NULL,
 
-    Constraint PerformanceMusic_Performance_FK (performanceID) REFERENCES Performances(performanceID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Constraint PerformanceMusic_Music_FK (musicID) REFERENCES Music(musicID) ON DELETE CASCADE ON UPDATE CASCADE,
-    Constraint PerformanceMusic_Ensemble_FK (ensembleID) REFERENCES Ensembles(ensembleID) ON DELETE CASCADE ON UPDATE CASCADE
+	PRIMARY KEY (performanceID,musicID, ensembleID),
+    Constraint PerformanceMusic_Performance_FK FOREIGN KEY (performanceID) REFERENCES Performances(performanceID) ON DELETE CASCADE ON UPDATE CASCADE,
+    Constraint PerformanceMusic_Music_FK FOREIGN KEY (musicID) REFERENCES Music(musicID) ON DELETE CASCADE ON UPDATE CASCADE,
+    Constraint PerformanceMusic_Ensemble_FK FOREIGN KEY (ensembleID) REFERENCES Ensembles(ensembleID) ON DELETE CASCADE ON UPDATE CASCADE
 )
+
 
 --dsjbsakjdbsakjdbaskjbdsajk
 

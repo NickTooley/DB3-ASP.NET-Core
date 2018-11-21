@@ -21,6 +21,10 @@ namespace Assignment2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("TutorOnly", policy => policy.RequireClaim("tutorID"));
+            });
             services.AddTransient<SpecialsDataContext>();
             string connectionString = "Data Source=192.168.0.149;Initial Catalog=mydb;User ID=SA;Password=P@ssw0rd;";
 
