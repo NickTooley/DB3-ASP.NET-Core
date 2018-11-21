@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Assignment2.Models.Post>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+}
+
+@section elements {
+    class="active"
+}
+
+@foreach (var post in Model)
+{
+    @Html.Partial("_Post", post)
+}

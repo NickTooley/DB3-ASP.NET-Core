@@ -1,0 +1,40 @@
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model Assignment2.Models.AccountModels.Login
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Account";
+}
+
+@section divClass{
+    class="auth-box"
+}
+
+@section form{
+    
+<form asp-action="Login" asp-controller="Account">
+
+    <div asp-validation-summary="All" class="input-validation-error" role="alert">
+    </div>
+
+    <div class="form-group">
+        <input asp-for="Email" placeholder="Email Address" class="form-control" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="Password" class="form-control" placeholder="********" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div class="form-group clearfix">
+        <label class="fancy-checkbox element-left">
+            <input asp-for="RememberMe" type="checkbox">
+            <span>Remember me</span>
+        </label>
+    </div>
+    <p>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+    </p>
+
+</form>
+}

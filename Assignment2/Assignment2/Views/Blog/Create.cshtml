@@ -1,0 +1,30 @@
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model Assignment2.Models.Post
+
+@{
+    Layout = "_Layout";
+}
+
+<fieldset>
+    <form asp-action="Create" asp-controller="Blog">
+        
+        <div asp-validation-summary="All" class="input-validation-error" role="alert">
+        </div>
+
+        <p>
+            <label asp-for="msg"></label>
+            <input asp-for="msg" placeholder="Enter a Message" />
+            <span asp-validation-for="msg"></span>
+        </p>
+
+        <p>
+            <label asp-for="msg2"></label>
+            <input asp-for="msg2" placeholder="Enter a 2nd Message" />
+        </p>
+        <p>
+            <button type="submit">Create Post</button>
+        </p>
+        
+    </form>
+</fieldset>
+

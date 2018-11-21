@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Assignment2.Models.Special>
+
+@foreach(var special in Model)
+{
+    <tr>
+        <td><a href="#">@special.id</a></td>
+        <td>@special.Name</td>
+        <td>@special.amount</td>
+        <td>@special.date</td>
+        <td><span class="@(special.label)">@special.status</span></td>
+    </tr>
+}
