@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Assignment2.ModelGenTest;
 using Assignment2.Models.AccountModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,17 @@ namespace Assignment2.Controllers
 
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly db3assn2Context _db;
+        //private readonly PasswordHasher<IdentityUser> _passwordHasher;
 
         public AccountController(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            db3assn2Context db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _db = db;
         }
 
 
@@ -57,7 +62,7 @@ namespace Assignment2.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -86,6 +91,17 @@ namespace Assignment2.Controllers
 
                 if(result.Succeeded)
                 {
+                    var person = new Person();
+
+                    person.Email = model.Email;
+                    person.FirstName = model.FirstName;
+                    person.LastName = model.LastName;
+                    person.Password = model.Password;
+                    person.Dob = model.DOB;
+
+                    _db.Person.Add(person);
+                    _db.SaveChanges();
+
                     return RedirectToAction("Login", "Account");
                 }
                 else

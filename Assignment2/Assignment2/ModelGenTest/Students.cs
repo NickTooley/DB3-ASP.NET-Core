@@ -15,6 +15,7 @@ namespace Assignment2.ModelGenTest
         public int PersonId { get; set; }
 
         public Person Person { get; set; }
+        public StudentGuardians StudentGuardians { get; set; }
         public ICollection<ClassList> ClassList { get; set; }
         public ICollection<InstrumentHire> InstrumentHire { get; set; }
     }

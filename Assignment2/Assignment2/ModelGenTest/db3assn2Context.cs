@@ -4,15 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Assignment2.ModelGenTest
 {
-    public partial class modelgentestContext : DbContext
+    public partial class db3assn2Context : DbContext
     {
-        public modelgentestContext()
+        public db3assn2Context()
         {
         }
 
-        public modelgentestContext(DbContextOptions<modelgentestContext> options)
+        public db3assn2Context(DbContextOptions<db3assn2Context> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public virtual DbSet<Classes> Classes { get; set; }
@@ -30,17 +31,16 @@ namespace Assignment2.ModelGenTest
         public virtual DbSet<Performances> Performances { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<Seniority> Seniority { get; set; }
+        public virtual DbSet<StudentGuardians> StudentGuardians { get; set; }
         public virtual DbSet<Students> Students { get; set; }
         public virtual DbSet<Tutors> Tutors { get; set; }
-
-        // Unable to generate entity type for table 'dbo.StudentGuardians'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=192.168.0.149;Initial Catalog=modelgentest;User ID=SA;Password=P@ssw0rd;");
+                optionsBuilder.UseSqlServer("Data Source=192.168.0.149;Initial Catalog=db3assn2;User ID=SA;Password=P@ssw0rd;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             }
         }
 
@@ -309,6 +309,10 @@ namespace Assignment2.ModelGenTest
 
             modelBuilder.Entity<Person>(entity =>
             {
+                entity.HasIndex(e => e.Email)
+                    .HasName("Person_Email")
+                    .IsUnique();
+
                 entity.Property(e => e.PersonId).HasColumnName("personID");
 
                 entity.Property(e => e.Dob)
@@ -348,6 +352,44 @@ namespace Assignment2.ModelGenTest
                     .HasColumnName("seniorityName")
                     .HasMaxLength(20)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<StudentGuardians>(entity =>
+            {
+                entity.HasKey(e => e.StudentId);
+
+                entity.Property(e => e.StudentId)
+                    .HasColumnName("studentID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ContactPhone)
+                    .IsRequired()
+                    .HasColumnName("contactPhone")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasColumnName("email")
+                    .HasMaxLength(60)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasColumnName("firstName")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasColumnName("lastName")
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Student)
+                    .WithOne(p => p.StudentGuardians)
+                    .HasForeignKey<StudentGuardians>(d => d.StudentId)
+                    .HasConstraintName("Student_Guardians_FK");
             });
 
             modelBuilder.Entity<Students>(entity =>

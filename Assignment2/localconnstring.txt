@@ -1,0 +1,1 @@
+Data Source=192.168.0.149;Initial Catalog=db3assn2;User ID=SA;Password=P@ssw0rd;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False

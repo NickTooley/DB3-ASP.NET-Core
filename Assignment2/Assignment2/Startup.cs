@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Assignment2.ModelGenTest;
 using Assignment2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,9 +27,14 @@ namespace Assignment2
                 options.AddPolicy("TutorOnly", policy => policy.RequireClaim("tutorID"));
             });
             services.AddTransient<SpecialsDataContext>();
-            string connectionString = "Data Source=192.168.0.149;Initial Catalog=mydb;User ID=SA;Password=P@ssw0rd;";
+            string connectionString = "Data Source=192.168.0.149;Initial Catalog=db3assn2;User ID=SA;Password=P@ssw0rd;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
             services.AddDbContext<DataContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
+
+            services.AddDbContext<db3assn2Context>(options =>
             {
                 options.UseSqlServer(connectionString);
             });
@@ -37,7 +43,7 @@ namespace Assignment2
                 options.UseSqlServer(connectionString,
                 optionsBuilders => 
                     optionsBuilders.MigrationsAssembly("Assignment2")));
-                    
+                  
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
