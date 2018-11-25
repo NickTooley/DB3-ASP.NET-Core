@@ -27,7 +27,7 @@ namespace Assignment2
                 options.AddPolicy("TutorOnly", policy => policy.RequireClaim("tutorID"));
             });
             services.AddTransient<SpecialsDataContext>();
-            string connectionString = "Data Source=192.168.0.149;Initial Catalog=db3assn2;User ID=SA;Password=P@ssw0rd;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            string connectionString = "Data Source=139.59.192.199;Initial Catalog=db3assn;User ID=SA;Password=P@ssw0rd;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
             services.AddDbContext<DataContext>(options =>
             {

@@ -1,5 +1,6 @@
 ﻿using Assignment2.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace Assignment2.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var specials = _specials.GetSpecials();
+            
+            var specials = _specials.GetSpecials(User.Identity.Name);
             return View(specials);
         }
 

@@ -16,6 +16,7 @@ IF OBJECT_ID('Performances') IS NOT NULL DROP TABLE Performances
 IF OBJECT_ID('PerformanceMusic') IS NOT NULL DROP TABLE PerformanceMusic
 IF OBJECT_ID('Locations') IS NOT NULL DROP TABLE Locations
 
+
 CREATE TABLE Person 
 (
     personID            INT             IDENTITY(0,1) PRIMARY KEY,
@@ -77,10 +78,10 @@ CREATE TABLE Instruments
     headTutorID         INT             NOT NULL,
     maxClassSize        INT             NOT NULL DEFAULT(8),
     inventoryNumber     INT             NOT NULL,
-    openFee             SMALLMONEY      ,
     studentFee          SMALLMONEY      ,
+    openFee             SMALLMONEY      ,
     hireFee             SMALLMONEY      ,
-
+    instrumentName      VARCHAR(30)     ,
     Constraint Instrument_Head_Tutor_FK FOREIGN KEY (headTutorID) REFERENCES Tutors(tutorID) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
@@ -149,6 +150,7 @@ CREATE TABLE Music
 (
     musicID             INT             IDENTITY(0,1) PRIMARY KEY,
     level               INT             NOT NULL,
+    musicName           VARCHAR(30)     NOT NULL
 
 )
 
@@ -188,4 +190,15 @@ CREATE TABLE PerformanceMusic
     Constraint PerformanceMusic_Performance_FK FOREIGN KEY (performanceID) REFERENCES Performances(performanceID) ON DELETE CASCADE ON UPDATE CASCADE,
     Constraint PerformanceMusic_Music_FK FOREIGN KEY (musicID) REFERENCES Music(musicID) ON DELETE CASCADE ON UPDATE CASCADE,
     Constraint PerformanceMusic_Ensemble_FK FOREIGN KEY (ensembleID) REFERENCES Ensembles(ensembleID) ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+CREATE TABLE Enrollment
+(
+    studentID           INT             NOT NULL,
+    instrumentID        INT             NOT NULL,
+    lessonLevel         INT             NOT NULL,
+
+    PRIMARY KEY (studentID, instrumentID),
+    Constraint Enrollment_Student_FK FOREIGN KEY (studentID) REFERENCES Students(studentID) ON DELETE CASCADE ON UPDATE CASCADE,
+    Constraint Enrollment_Instrument_FK FOREIGN KEY (instrumentID) REFERENCES Instruments(instrumentID) ON DELETE NO ACTION ON UPDATE NO ACTION
 )

@@ -1,71 +1,79 @@
-﻿using System;
+﻿using Assignment2.ModelGenTest;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment2.Models
 {
-    public class Special
+    public class FullEnrollment
     {   
-        public int id { get; internal set; }
-        public string Name { get; internal set; }
-        public int amount { get; internal set; }
-        public string date { get; internal set; }
-        public string status { get; internal set; }
+        public string InstrumentName { get; internal set; }
+        public int Level { get; internal set; }
+        public string Status { get; internal set; }
         public string label { get; internal set; }
     }
     public class SpecialsDataContext
     {
-        public IEnumerable<Special> GetSpecials()
+        private readonly db3assn2Context _db;
+        public SpecialsDataContext(db3assn2Context db)
         {
-            return new[]
+            _db = db;
+        }
+        public List<FullEnrollment> GetSpecials(string email)
+        {
+            bool isStudent = 0 < _db.Students.Where(s => s.Person.Email.Equals(email)).Count();
+            if (isStudent)
             {
-                new Special
+                int studentID = _db.Students.Where(s => s.Person.Email.Equals(email)).Single().StudentId;
+                var enrollments = _db.Enrollment.Where(e => e.StudentId == studentID);
+
+                List<FullEnrollment> toReturn = new List<FullEnrollment>();
+
+                foreach (var enrollment in enrollments)
                 {
-                    id = 763649,
-                    Name = "Amber",
-                    amount = 62,
-                    date = "Oct 21, 2016",
-                    status = "PENDING",
-                    label = "label label-warning"
-                },
-                new Special
-                {
-                    id = 763648,
-                    Name = "Steve",
-                    amount = 122,
-                    date = "Oct 21, 2016",
-                    status = "COMPLETED",
-                    label = "label label-success"
-                },
-                new Special
-                {
-                    id = 763651,
-                    Name = "Roger",
-                    amount = 186,
-                    date = "Oct 17, 2016",
-                    status = "SUCCESS",
-                    label = "label label-success"
-                },
-                new Special
-                {
-                    id = 763650,
-                    Name = "Michael",
-                    amount = 34,
-                    date = "Oct 18, 2016",
-                    status = "FAILED",
-                    label = "label label-danger"
-                },
-                new Special
-                {
-                    id = 763652,
-                    Name = "Smith",
-                    amount = 362,
-                    date = "Oct 16, 2016",
-                    status = "SUCCESS",
-                     label = "label label-success"
-                },
-            };
+                    var instrument = _db.Instruments.Where(i => i.InstrumentId == enrollment.InstrumentId).Single();
+                    bool exists = 0 < _db.Classes.Where(c => c.InstrumentId == enrollment.InstrumentId && c.LessonLevel == enrollment.LessonLevel).Count();
+                    string status = "";
+                    string label = "";
+                    if (exists)
+                    {
+                        var retrievedClass = _db.Classes.Where(c => c.InstrumentId == enrollment.InstrumentId && c.LessonLevel == enrollment.LessonLevel).Single();
+                        bool enoughStudents = 2 < _db.ClassList.Where(cl => cl.ClassId == retrievedClass.ClassId).Count();
+
+                        if (enoughStudents)
+                        {
+                            status = "COMPLETED";
+                            label = "label label - success";
+                        }
+                        else
+                        {
+                            status = "Not Enough Students";
+                            label = "label label-warning";
+                        }
+
+                    }
+                    else
+                    {
+                        status = "No Tutors";
+                        label = "label label-warning";
+                    }
+                    toReturn.Add(new FullEnrollment
+                    {
+                        InstrumentName = instrument.InstrumentName,
+                        Level = enrollment.LessonLevel,
+                        Status = status,
+                        label = label
+                    });
+                }
+                return toReturn;
+            }
+            else
+            {
+                return new List<FullEnrollment>();
+            }
         }
     }
 }

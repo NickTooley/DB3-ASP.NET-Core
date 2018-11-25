@@ -8,6 +8,7 @@ namespace Assignment2.ModelGenTest
         public Instruments()
         {
             Classes = new HashSet<Classes>();
+            Enrollment = new HashSet<Enrollment>();
             InstrumentHire = new HashSet<InstrumentHire>();
             InstrumentTutors = new HashSet<InstrumentTutors>();
             MusicInstruments = new HashSet<MusicInstruments>();
@@ -21,9 +22,11 @@ namespace Assignment2.ModelGenTest
         public decimal? OpenFee { get; set; }
         public decimal? StudentFee { get; set; }
         public decimal? HireFee { get; set; }
+        public string InstrumentName { get; set; }
 
         public Tutors HeadTutor { get; set; }
         public ICollection<Classes> Classes { get; set; }
+        public ICollection<Enrollment> Enrollment { get; set; }
         public ICollection<InstrumentHire> InstrumentHire { get; set; }
         public ICollection<InstrumentTutors> InstrumentTutors { get; set; }
         public ICollection<MusicInstruments> MusicInstruments { get; set; }

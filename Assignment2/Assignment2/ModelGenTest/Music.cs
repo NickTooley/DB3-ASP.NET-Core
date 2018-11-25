@@ -13,6 +13,7 @@ namespace Assignment2.ModelGenTest
 
         public int MusicId { get; set; }
         public int Level { get; set; }
+        public string MusicName { get; set; }
 
         public ICollection<MusicInstruments> MusicInstruments { get; set; }
         public ICollection<PerformanceMusic> PerformanceMusic { get; set; }

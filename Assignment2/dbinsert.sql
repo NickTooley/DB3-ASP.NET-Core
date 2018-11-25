@@ -1,153 +1,229 @@
 --Ensembles(name)
-INSERT INTO Ensembles VALUES('Training Orchestra')
-INSERT INTO Ensembles VALUES('Junior Sinfonia')
-INSERT INTO Ensembles VALUES('Community Orchestra')
+INSERT INTO Ensembles VALUES('Training Orchestra') --0
+INSERT INTO Ensembles VALUES('Junior Sinfonia') --1
+INSERT INTO Ensembles VALUES('Community Orchestra') --2
 
 --Persons(email,firstName,lastName,password,DOB)
-INSERT INTO Persons VALUES('a@a.com','Sam','Hildreth', "password", TO_DATE("20/12/2006", "DD/MM/YYYY")) --1
-INSERT INTO Persons VALUES('b@b.com','Olivia','Finer', "password", TO_DATE("20/12/2006", "DD/MM/YYYY")) --2
-INSERT INTO Persons VALUES('c@c.com','Taylor','Johnston', "password", TO_DATE("20/12/2012", "DD/MM/YYYY")) --3
-INSERT INTO Persons VALUES('d@d.com','Rohil','Singh', "password", TO_DATE("20/12/2009", "DD/MM/YYYY")) --4
-INSERT INTO Persons VALUES('e@e.com','Dylan','Hall', "password", TO_DATE("20/12/1978", "DD/MM/YYYY")) --5
-INSERT INTO Persons VALUES('f@f.com','Mitch','Keenan', "password", TO_DATE("20/12/1980", "DD/MM/YYYY")) --6
-INSERT INTO Persons VALUES('g@g.com','Liam','Driver', "password", TO_DATE("20/12/2005", "DD/MM/YYYY")) --7
-INSERT INTO Persons VALUES('h@h.com','Victoria','Wilson', "password", TO_DATE("20/12/1996", "DD/MM/YYYY")) --8
-INSERT INTO Persons VALUES('i@i.com','Rosie','Wilson', "password", TO_DATE("20/12/1996", "DD/MM/YYYY")) --9
-INSERT INTO Persons VALUES('j@j.com','James','Ladanyi', "password", TO_DATE("20/12/2002", "DD/MM/YYYY")) --10
+INSERT INTO Person VALUES('a@a.com','Sam','Hildreth', 'password', '2006-12-20') --1
+INSERT INTO Person VALUES('b@b.com','Olivia','Finer', 'password', '2006-2-27') --2
+INSERT INTO Person VALUES('c@c.com','Taylor','Johnston', 'password', '2012-8-10') --3
+INSERT INTO Person VALUES('d@d.com','Rohil','Singh', 'password', '2009-5-20') --4
+INSERT INTO Person VALUES('e@e.com','Dylan','Hall', 'password', '1978-4-18') --5
+INSERT INTO Person VALUES('f@f.com','Mitch','Keenan', 'password', '1980-1-22') --6
+INSERT INTO Person VALUES('g@g.com','Liam','Driver', 'password', '2005-9-23') --7
+INSERT INTO Person VALUES('h@h.com','Victoria','Wilson', 'password', '1996-11-20') --8
+INSERT INTO Person VALUES('i@i.com','Rosie','Wilson', 'password', '1996-10-2') --9
+INSERT INTO Person VALUES('j@j.com','James','Ladanyi', 'password', '2002-12-10') --10
 
 --Students(PersonID)
-INSERT INTO Students VALUES(1)
-INSERT INTO Students VALUES(2)
-INSERT INTO Students VALUES(3)
-INSERT INTO Students VALUES(4)
-INSERT INTO Students VALUES(5)
-INSERT INTO Students VALUES(7)
-INSERT INTO Students VALUES(10)
+INSERT INTO Students VALUES(1) --1
+INSERT INTO Students VALUES(2) --2
+INSERT INTO Students VALUES(3) --3
+INSERT INTO Students VALUES(4) --4
+INSERT INTO Students VALUES(5) --5
+INSERT INTO Students VALUES(7) --6
+INSERT INTO Students VALUES(10) --7
 
 --StudentGuardians(studentID, firstName, lastName, contactPhone, email)
-INSERT INTO StudentGuardians VALUES(1,"Mama", "Hildreth", "021453723", "abc@abc.com")
-INSERT INTO StudentGuardians VALUES(1,"Papa", "Hildreth", "021452323", "def@abc.com")
-INSERT INTO StudentGuardians VALUES(2,"Jo", "Finer", "021453244", "jofiner@fonterra.com")
-INSERT INTO StudentGuardians VALUES(3,"Michael", "Johnston", "022453233", "anz@anz.com")
-INSERT INTO StudentGuardians VALUES(4,"Rohilla", "Singh", "02712234564", "bnz@bnz.com")
-INSERT INTO StudentGuardians VALUES(5,"Dylan", "Hall", "021454353", "e@e.com")
-INSERT INTO StudentGuardians VALUES(7,"Screw", "Driver", "0214212393", "asd@plumbing.com")
-INSERT INTO StudentGuardians VALUES(10,"London", "Ladanyi", "0234324723", "london@england.co.uk")
+INSERT INTO StudentGuardians VALUES(1,'Mama', 'Hildreth', '021453723', 'abc@abc.com')
+INSERT INTO StudentGuardians VALUES(1,'Papa', 'Hildreth', '021452323', 'def@abc.com')
+INSERT INTO StudentGuardians VALUES(2,'Jo', 'Finer', '021453244', 'jofiner@fonterra.com')
+INSERT INTO StudentGuardians VALUES(3,'Michael', 'Johnston', '022453233', 'anz@anz.com')
+INSERT INTO StudentGuardians VALUES(4,'Rohilla', 'Singh', '02712234564', 'bnz@bnz.com')
+INSERT INTO StudentGuardians VALUES(5,'Dylan', 'Hall', '021454353', 'e@e.com')
+INSERT INTO StudentGuardians VALUES(6,'Screw', 'Driver', '0214212393', 'asd@plumbing.com')
+INSERT INTO StudentGuardians VALUES(0,'London', 'Ladanyi', '0234324723', 'london@england.co.uk')
 
 --Tutors(personID)
 INSERT INTO Tutors VALUES(6) --0
 INSERT INTO Tutors VALUES(8) --1
 INSERT INTO Tutors VALUES(9) --2
 
---Instruments(instrumentID, headTutorID, maxClassSize(default(8)), inventoryNumber, openFee, studentFee, hireFee)
-INSERT INTO Instruments VALUES('Recorder', 9, 16, 10, 40, NULL, NULL) --0
-INSERT INTO Instruments VALUES('Violin', 9, 10, 50, 210, 40) --1
-INSERT INTO Instruments VALUES('Viola', 9, 10, 50, 210, 40) --2
-INSERT INTO Instruments VALUES('Cello', 9, 10, 50, 240, 80) --3
-INSERT INTO Instruments VALUES('Double Bass', 9, 10, 50, 240, 80) --4
-INSERT INTO Instruments VALUES('Flute', 9, 10, 50, 210, 40) --5
-INSERT INTO Instruments VALUES('Clarinet', 9, 10, 50, 210, 40) --6
-INSERT INTO Instruments VALUES('Oboe', 9, 10, 50, 300, 80) --7
-INSERT INTO Instruments VALUES('Bassoon', 9, 10, 50, 300, 80) --8
-INSERT INTO Instruments VALUES('Other woodwind', 9, 10, 80, 300, 80) --9
-INSERT INTO Instruments VALUES('Trumpet', 9, 10, 50, 210, 40) --10
-INSERT INTO Instruments VALUES('Trombone', 9, 10, 50, 240, 40) --11
-INSERT INTO Instruments VALUES('French Horn', 9, 10, 50, 240, 80) --12
-INSERT INTO Instruments VALUES('Tuba', 9, 10, 50, 280, 80) --13
-INSERT INTO Instruments VALUES('Other Brass', 9, 10, 80, 300, 80) --14
-INSERT INTO Instruments VALUES('Percussion', 9, 10, 50, 280, NULL) --15
-INSERT INTO Instruments VALUES('Vocal Technique', 9, 10, 80, 300, NULL) --16
-INSERT INTO Instruments VALUES('Music Theory', 9, 10, 80, 300, NULL) --17
+--Instruments(headTutorID, maxClassSize(default(8)), inventoryNumber, openFee, studentFee, hireFee, instrumentName)
+INSERT INTO Instruments VALUES(2, 16, 10, 40, NULL, NULL, 'Recorder') --0
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 210, 40, 'Violin') --1
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 210, 40, 'Viola') --2
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 240, 80, 'Cello') --3
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 240, 80, 'Double Bass') --4
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 210, 40, 'Flute') --5
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 210, 40, 'Clarinet') --6
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 300, 80, 'Oboe') --7
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 300, 80, 'Bassoon') --8
+INSERT INTO Instruments VALUES(2, 8, 10, 80, 300, 80, 'Other woodwind') --9
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 210, 40, 'Trumpet') --10
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 240, 40, 'Trombone') --11
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 240, 80, 'French Horn') --12
+INSERT INTO Instruments VALUES(2, 8, 10, 50, 280, 80, 'Tuba') --13
+INSERT INTO Instruments VALUES(2, 8,10, 80, 300, 80, 'Other Brass') --14
+INSERT INTO Instruments VALUES(2, 8,10, 50, 280, NULL, 'Percussion') --15
+INSERT INTO Instruments VALUES(2, 8,10, 80, 300, NULL, 'Vocal Technique') --16
+INSERT INTO Instruments VALUES(2, 8,10, 80, 300, NULL, 'Music Theory') --17
 
 --InstrumentHire(studentID, instrumentID)
+INSERT INTO InstrumentHire VALUES(1, 10)
+INSERT INTO InstrumentHire VALUES(2, 10)
+INSERT INTO InstrumentHire VALUES(3, 10)
+INSERT INTO InstrumentHire VALUES(5, 13)
+INSERT INTO InstrumentHire VALUES(0, 7)
+
+--Classes(instrumentID, tutorID, lessonLevel)
+INSERT INTO Classes VALUES(10, 1, 4) --0
+INSERT INTO Classes VALUES(13, 0, 2) --1
+INSERT INTO Classes VALUES(7, 2, 6) --2
+
+
+INSERT INTO Classes VALUES(0, 1, 4) --0
+INSERT INTO Classes VALUES(1, 0, 2) --1
+INSERT INTO Classes VALUES(2, 2, 6) --2
+INSERT INTO Classes VALUES(3, 1, 4) --0
+INSERT INTO Classes VALUES(4, 0, 2) --1
+INSERT INTO Classes VALUES(5, 2, 6) --2
+INSERT INTO Classes VALUES(6, 1, 4) --0
+INSERT INTO Classes VALUES(8, 0, 2) --1
+INSERT INTO Classes VALUES(9, 2, 6) --2
+INSERT INTO Classes VALUES(11, 1, 4) --0
+INSERT INTO Classes VALUES(12, 0, 2) --1
+INSERT INTO Classes VALUES(14, 2, 6) --2
+INSERT INTO Classes VALUES(15, 1, 4) --0
+INSERT INTO Classes VALUES(16, 0, 2) --1
+INSERT INTO Classes VALUES(17, 2, 6) --2
+
+--ClassList(classID, studentID)
+INSERT INTO ClassList VALUES(0, 1)
+INSERT INTO ClassList VALUES(0, 2)
+INSERT INTO ClassList VALUES(0, 3)
+INSERT INTO ClassList VALUES(1, 5)
+INSERT INTO ClassList VALUES(1, 4)
+INSERT INTO ClassList VALUES(2, 0)
+INSERT INTO ClassList VALUES(1, 6)
 
 
 
---(PersonID,ATCLQualification(0 False, 1 True),Seniority)
-INSERT INTO Tutors VALUES(6,0,'Junior')
-INSERT INTO Tutors VALUES(7,1,'Senior')
-INSERT INTO Tutors VALUES(8,2,'Head')
+--Seniority(seniorityName)
+INSERT INTO Seniority VALUES('Junior') --0
+INSERT INTO Seniority VALUES('Senior') --1
+INSERT INTO Seniority VALUES('Head') --2
 
---(PersonID,DateOfEnrollment,EnsembleEnrollingIn)
-INSERT INTO Enrollments VALUES(4,'2018-01-25','Junior Sinfonia')
-INSERT INTO Enrollments VALUES(5,'2018-01-25','Training Orchestra')
+--InstrumentTutors(tutorID, instrumentID, seniorityID)
+INSERT INTO InstrumentTutors VALUES(1, 10, 1)
+INSERT INTO InstrumentTutors VALUES(0, 13, 0)
+INSERT INTO InstrumentTutors VALUES(2, 7, 2)
 
---(PersonID)
-INSERT INTO OpenDivision VALUES(1)
-INSERT INTO OpenDivision VALUES(2)
+--Locations(address, name)
+INSERT INTO Locations VALUES('1 Main Way', 'The Perfomance Center') --0
+INSERT INTO Locations VALUES('730 Great King Street', 'The Baaa Bar') --1
+INSERT INTO Locations VALUES('62 Best Street', 'Practice Hall') --2
+INSERT INTO Locations VALUES('8 Music Way', 'The Hub') --3
 
---(PersonID)
-INSERT INTO Under18 VALUES (3)
+--Performances(locationID)
+INSERT INTO Performances VALUES(0)
+INSERT INTO Performances VALUES(1)
+INSERT INTO Performances VALUES(3)
 
---(PersonID)
-INSERT INTO Administrators VALUES(0)
+--Music(level, musicName)
+-- INSERT INTO Music VALUES(4, 'Music 1') --0
+-- INSERT INTO Music VALUES(1, 'Music 2') --1
+INSERT INTO Music VALUES(2, 'Music 3') --2
+INSERT INTO Music VALUES(3, 'Music 4') --3
+INSERT INTO Music VALUES(8, 'Music 5') --4
+INSERT INTO Music VALUES(7, 'Music 6') --5
 
---(InstrumentName)
-INSERT INTO Instruments VALUES('Recorder')
-INSERT INTO Instruments VALUES('Violin')
-INSERT INTO Instruments VALUES('Viola')
-INSERT INTO Instruments VALUES('Cello')
-INSERT INTO Instruments VALUES('Double Bass')
-INSERT INTO Instruments VALUES('Flute')
-INSERT INTO Instruments VALUES('Clarinet')
-INSERT INTO Instruments VALUES('Oboe')
-INSERT INTO Instruments VALUES('Bassoon')
-INSERT INTO Instruments VALUES('Other woodwind')
-INSERT INTO Instruments VALUES('Trumpet')
-INSERT INTO Instruments VALUES('Trumbone')
-INSERT INTO Instruments VALUES('French Horn')
-INSERT INTO Instruments VALUES('Tuba')
-INSERT INTO Instruments VALUES('Other Brass')
-INSERT INTO Instruments VALUES('Percussion')
+--MusicInstruments(musicID, instrumentID)
+INSERT INTO MusicInstruments VALUES(0, 10)
+INSERT INTO MusicInstruments VALUES(0, 13)
+INSERT INTO MusicInstruments VALUES(0, 11)
+INSERT INTO MusicInstruments VALUES(0, 7)
+INSERT INTO MusicInstruments VALUES(0, 1)
+INSERT INTO MusicInstruments VALUES(0, 9)
+INSERT INTO MusicInstruments VALUES(1, 10)
+INSERT INTO MusicInstruments VALUES(1, 13)
+INSERT INTO MusicInstruments VALUES(1, 11)
+INSERT INTO MusicInstruments VALUES(1, 7)
+INSERT INTO MusicInstruments VALUES(2, 1)
+INSERT INTO MusicInstruments VALUES(2, 9)
+INSERT INTO MusicInstruments VALUES(2, 10)
+INSERT INTO MusicInstruments VALUES(3, 10)
+INSERT INTO MusicInstruments VALUES(3, 1)
+INSERT INTO MusicInstruments VALUES(3, 9)
+INSERT INTO MusicInstruments VALUES(3, 2)
+INSERT INTO MusicInstruments VALUES(4, 2)
+INSERT INTO MusicInstruments VALUES(5, 2)
+INSERT INTO MusicInstruments VALUES(5, 3)
+INSERT INTO MusicInstruments VALUES(5, 4)
+INSERT INTO MusicInstruments VALUES(5, 5)
+INSERT INTO MusicInstruments VALUES(5, 6)
+INSERT INTO MusicInstruments VALUES(5, 7)
 
---(PersonID,IntrumentName)
-INSERT INTO InstrumentHires VALUES(1,'Tuba')
-INSERT INTO InstrumentHires VALUES(2,'Oboe')
+--PerformanceMusic(performanceID, musicID, ensembleID)
+INSERT INTO PerformanceMusic VALUES(0,1,0)
+INSERT INTO PerformanceMusic VALUES(0,1,1)
+INSERT INTO PerformanceMusic VALUES(0,1,2)
+INSERT INTO PerformanceMusic VALUES(1,1,0)
+INSERT INTO PerformanceMusic VALUES(1,1,0)
+INSERT INTO PerformanceMusic VALUES(2,1,0)
 
---(LessonName)
-INSERT INTO Lessons VALUES('Recorder')
-INSERT INTO Lessons VALUES('Violin')
-INSERT INTO Lessons VALUES('Viola')
-INSERT INTO Lessons VALUES('Cello')
-INSERT INTO Lessons VALUES('Double Bass')
-INSERT INTO Lessons VALUES('Flute')
-INSERT INTO Lessons VALUES('Clarinet')
-INSERT INTO Lessons VALUES('Oboe')
-INSERT INTO Lessons VALUES('Bassoon')
-INSERT INTO Lessons VALUES('Other woodwind')
-INSERT INTO Lessons VALUES('Trumpet')
-INSERT INTO Lessons VALUES('Trumbone')
-INSERT INTO Lessons VALUES('French Horn')
-INSERT INTO Lessons VALUES('Tuba')
-INSERT INTO Lessons VALUES('Other Brass')
-INSERT INTO Lessons VALUES('Percussion')
-INSERT INTO Lessons VALUES('Vocal Technique')
-INSERT INTO Lessons VALUES('Music Theory')
+--EnsembleMusicians(ensembleID, personID)
+INSERT INTO EnsembleMusicians VALUES(0,4)
+INSERT INTO EnsembleMusicians VALUES(0,5)
+INSERT INTO EnsembleMusicians VALUES(0,7)
+INSERT INTO EnsembleMusicians VALUES(1,1)
+INSERT INTO EnsembleMusicians VALUES(1,2)
+INSERT INTO EnsembleMusicians VALUES(1,3)
+INSERT INTO EnsembleMusicians VALUES(1,10)
 
---(LessonName,LessonTime,GroupSize,LessonLevel,TutorID)
-INSERT INTO LessonSchedule VALUES('Music Theory', '08:30:00',0,0,6)
-INSERT INTO LessonSchedule VALUES('Vocal Technique', '14:30:00',0,7,8)
+--PayScales(seniorityID, instrumentID, pay)
+INSERT INTO PayScales VALUES(0,0,50)
+INSERT INTO PayScales VALUES(0,1,50)
+INSERT INTO PayScales VALUES(0,2,50)
+INSERT INTO PayScales VALUES(0,3,50)
+INSERT INTO PayScales VALUES(0,4,50)
+INSERT INTO PayScales VALUES(0,5,50)
+INSERT INTO PayScales VALUES(0,6,50)
+INSERT INTO PayScales VALUES(0,7,50)
+INSERT INTO PayScales VALUES(0,8,50)
+INSERT INTO PayScales VALUES(0,9,50)
+INSERT INTO PayScales VALUES(0,10,50)
+INSERT INTO PayScales VALUES(0,11,50)
+INSERT INTO PayScales VALUES(0,12,50)
+INSERT INTO PayScales VALUES(0,13,50)
+INSERT INTO PayScales VALUES(0,14,50)
+INSERT INTO PayScales VALUES(0,15,50)
+INSERT INTO PayScales VALUES(0,16,50)
+INSERT INTO PayScales VALUES(0,17,50)
+INSERT INTO PayScales VALUES(1,0,80)
+INSERT INTO PayScales VALUES(1,1,80)
+INSERT INTO PayScales VALUES(1,2,80)
+INSERT INTO PayScales VALUES(1,3,80)
+INSERT INTO PayScales VALUES(1,4,80)
+INSERT INTO PayScales VALUES(1,5,80)
+INSERT INTO PayScales VALUES(1,6,80)
+INSERT INTO PayScales VALUES(1,7,80)
+INSERT INTO PayScales VALUES(1,8,80)
+INSERT INTO PayScales VALUES(1,9,80)
+INSERT INTO PayScales VALUES(1,10,80)
+INSERT INTO PayScales VALUES(1,11,80)
+INSERT INTO PayScales VALUES(1,12,80)
+INSERT INTO PayScales VALUES(1,13,80)
+INSERT INTO PayScales VALUES(1,14,80)
+INSERT INTO PayScales VALUES(1,15,80)
+INSERT INTO PayScales VALUES(1,16,80)
+INSERT INTO PayScales VALUES(1,17,80)
+INSERT INTO PayScales VALUES(2,0,100)
+INSERT INTO PayScales VALUES(2,1,100)
+INSERT INTO PayScales VALUES(2,2,100)
+INSERT INTO PayScales VALUES(2,3,100)
+INSERT INTO PayScales VALUES(2,4,100)
+INSERT INTO PayScales VALUES(2,5,100)
+INSERT INTO PayScales VALUES(2,6,100)
+INSERT INTO PayScales VALUES(2,7,100)
+INSERT INTO PayScales VALUES(2,8,100)
+INSERT INTO PayScales VALUES(2,9,100)
+INSERT INTO PayScales VALUES(2,10,100)
+INSERT INTO PayScales VALUES(2,11,100)
+INSERT INTO PayScales VALUES(2,12,100)
+INSERT INTO PayScales VALUES(2,13,100)
+INSERT INTO PayScales VALUES(2,14,100)
+INSERT INTO PayScales VALUES(2,15,100)
+INSERT INTO PayScales VALUES(2,16,100)
+INSERT INTO PayScales VALUES(2,17,100)
 
---(PieceName,NumberOfCopies,IntrumentName,Orchestral(0 False, 1 True))
-INSERT INTO SheetMusic VALUES('Piece1',20,'Oboe',0)
-INSERT INTO SheetMusic VALUES('Piece2',20,'Tuba',1)
-INSERT INTO SheetMusic VALUES('Piece2',30,'Trumpet',1)
-INSERT INTO SheetMusic VALUES('Piece2',30,'Violin',1)
-
---(PerformanceLocation,PerformanceDate,PerformanceTime,PlayedRecord)
-INSERT INTO Performances VALUES('STREET','2018-12-25','15:30:00','SomethingPlayed')
-INSERT INTO Performances VALUES('ALLEYWAY','2018-12-25','16:30:00','SomeOtherThingPlayed')
-
-SELECT * FROM Ensembles
-SELECT * FROM Persons
-SELECT * FROM ContactInformation
-SELECT * FROM Administrators
-SELECT * FROM Students
-SELECT * FROM Enrollments
-SELECT * FROM Instruments
-SELECT * FROM InstrumentHires
-SELECT * FROM Tutors
-SELECT * FROM Lessons
-SELECT * FROM LessonSchedule
-SELECT * FROM SheetMusic
-SELECT * FROM Performances

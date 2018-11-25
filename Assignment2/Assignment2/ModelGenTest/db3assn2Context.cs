@@ -13,11 +13,18 @@ namespace Assignment2.ModelGenTest
         public db3assn2Context(DbContextOptions<db3assn2Context> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
 
+        public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<Classes> Classes { get; set; }
         public virtual DbSet<ClassList> ClassList { get; set; }
+        public virtual DbSet<Enrollment> Enrollment { get; set; }
         public virtual DbSet<EnsembleMusicians> EnsembleMusicians { get; set; }
         public virtual DbSet<Ensembles> Ensembles { get; set; }
         public virtual DbSet<InstrumentHire> InstrumentHire { get; set; }
@@ -46,6 +53,100 @@ namespace Assignment2.ModelGenTest
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AspNetRoleClaims>(entity =>
+            {
+                entity.HasIndex(e => e.RoleId);
+
+                entity.Property(e => e.RoleId).IsRequired();
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AspNetRoleClaims)
+                    .HasForeignKey(d => d.RoleId);
+            });
+
+            modelBuilder.Entity<AspNetRoles>(entity =>
+            {
+                entity.HasIndex(e => e.NormalizedName)
+                    .HasName("RoleNameIndex")
+                    .IsUnique()
+                    .HasFilter("([NormalizedName] IS NOT NULL)");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<AspNetUserClaims>(entity =>
+            {
+                entity.HasIndex(e => e.UserId);
+
+                entity.Property(e => e.UserId).IsRequired();
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserClaims)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserLogins>(entity =>
+            {
+                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+
+                entity.HasIndex(e => e.UserId);
+
+                entity.Property(e => e.UserId).IsRequired();
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserLogins)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserRoles>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.RoleId });
+
+                entity.HasIndex(e => e.RoleId);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AspNetUserRoles)
+                    .HasForeignKey(d => d.RoleId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserRoles)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUsers>(entity =>
+            {
+                entity.HasIndex(e => e.NormalizedEmail)
+                    .HasName("EmailIndex");
+
+                entity.HasIndex(e => e.NormalizedUserName)
+                    .HasName("UserNameIndex")
+                    .IsUnique()
+                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Email).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
+
+                entity.Property(e => e.UserName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<AspNetUserTokens>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserTokens)
+                    .HasForeignKey(d => d.UserId);
+            });
+
             modelBuilder.Entity<Classes>(entity =>
             {
                 entity.HasKey(e => e.ClassId);
@@ -88,6 +189,28 @@ namespace Assignment2.ModelGenTest
                     .HasForeignKey(d => d.StudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Classlist_Student_FK");
+            });
+
+            modelBuilder.Entity<Enrollment>(entity =>
+            {
+                entity.HasKey(e => new { e.StudentId, e.InstrumentId });
+
+                entity.Property(e => e.StudentId).HasColumnName("studentID");
+
+                entity.Property(e => e.InstrumentId).HasColumnName("instrumentID");
+
+                entity.Property(e => e.LessonLevel).HasColumnName("lessonLevel");
+
+                entity.HasOne(d => d.Instrument)
+                    .WithMany(p => p.Enrollment)
+                    .HasForeignKey(d => d.InstrumentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Enrollment_Instrument_FK");
+
+                entity.HasOne(d => d.Student)
+                    .WithMany(p => p.Enrollment)
+                    .HasForeignKey(d => d.StudentId)
+                    .HasConstraintName("Enrollment_Student_FK");
             });
 
             modelBuilder.Entity<EnsembleMusicians>(entity =>
@@ -154,9 +277,17 @@ namespace Assignment2.ModelGenTest
                     .HasColumnName("hireFee")
                     .HasColumnType("smallmoney");
 
+                entity.Property(e => e.InstrumentName)
+                    .IsRequired()
+                    .HasColumnName("instrumentName")
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.InventoryNumber).HasColumnName("inventoryNumber");
 
-                entity.Property(e => e.MaxClassSize).HasColumnName("maxClassSize");
+                entity.Property(e => e.MaxClassSize)
+                    .HasColumnName("maxClassSize")
+                    .HasDefaultValueSql("((8))");
 
                 entity.Property(e => e.OpenFee)
                     .HasColumnName("openFee")
@@ -223,6 +354,12 @@ namespace Assignment2.ModelGenTest
                 entity.Property(e => e.MusicId).HasColumnName("musicID");
 
                 entity.Property(e => e.Level).HasColumnName("level");
+
+                entity.Property(e => e.MusicName)
+                    .IsRequired()
+                    .HasColumnName("musicName")
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<MusicInstruments>(entity =>

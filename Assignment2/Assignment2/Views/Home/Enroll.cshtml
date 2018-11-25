@@ -1,0 +1,67 @@
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@addTagHelper "*, Microsoft.AspNetCore.Mvc.SelectTagHelpers"
+@model Assignment2.Models.Enroll
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+}
+
+@section enroll{
+    class="active"
+}
+<div class="panel panel-headline">
+    <div class="panel-heading">
+        <h3 class="panel-title">Enroll</h3>
+
+        <form asp-action="Enroll" asp-controller="Home">
+
+            <div asp-validation-summary="All" class="input-validation-error" role="alert">
+            </div>
+
+            <div class="form-group">
+                <input asp-for="GuardianFirstname" placeholder="Guardian First Name" class="form-control" />
+                <span asp-validation-for="GuardianFirstname"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="GuardianLastname" placeholder="Guardian Last Name" class="form-control" />
+                <span asp-validation-for="GuardianLastname"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="GuardianPhone" placeholder="Guardian Phone Number" class="form-control" />
+                <span asp-validation-for="GuardianPhone"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="GuardianEmail" placeholder="Guardian Email" class="form-control" />
+                <span asp-validation-for="GuardianEmail"></span>
+            </div>
+
+            <div class="form-group">
+                <select asp-for="instrumentID" asp-items="@Model.Instruments" >
+                    <option>Select an Instrument</option>
+                </select>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="LessonLevel" ></label>*@
+                @*<input asp-for="LessonLevel" type="number" min="0" max="8" value="0" />*@
+                <select asp-for="LessonLevel" asp-items="@Model.levels" >
+                    <option>Select a Lesson Level</option>
+                </select>
+            </div>
+            <div class="form-group clearfix">
+                <label class="fancy-checkbox element-left">
+                    <input asp-for="instrumentHire" type="checkbox">
+                    <span>Hire this instrument ?</span>
+                </label>
+            </div>
+            <p>
+                <button type="submit" class="btn btn-primary btn-lg">Enroll</button>
+            </p>
+    </div>
+</div>
+
+</form>

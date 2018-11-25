@@ -8,6 +8,7 @@ namespace Assignment2.ModelGenTest
         public Students()
         {
             ClassList = new HashSet<ClassList>();
+            Enrollment = new HashSet<Enrollment>();
             InstrumentHire = new HashSet<InstrumentHire>();
         }
 
@@ -17,6 +18,7 @@ namespace Assignment2.ModelGenTest
         public Person Person { get; set; }
         public StudentGuardians StudentGuardians { get; set; }
         public ICollection<ClassList> ClassList { get; set; }
+        public ICollection<Enrollment> Enrollment { get; set; }
         public ICollection<InstrumentHire> InstrumentHire { get; set; }
     }
 }

@@ -1,20 +1,4 @@
-/*	
-*	############################################################################################
-*	
-*	KLOROFIL - Free Bootstrap Dashboard Template
-*	---------------------------------------------------------------------
-*
-*	Version: 	2.0
-*	Author: 	The Develovers
-*	Website: 	https://www.themeineed.com/
-*	Copyright: 	Copyright 2016 The Develovers
-*	License: 	Creative Common Attribution 4.0 https://creativecommons.org/licenses/by/4.0/
-*	
-*	############################################################################################
-*/
-/********************
- * GENERAL STYLES
- ********************/
+
 html {
   position: relative;
   min-height: 100%; }
@@ -599,6 +583,17 @@ ul.list-justify > li {
     background-color: #00a0f0;
     border-color: #00a0f0; }
 
+button.btn-primary {
+    background-color: #00AAFF;
+    border-color: #00a0f0;
+}
+
+
+button.btn-primary:hover, .btn-primary:focus {
+    background-color: #00a0f0;
+    border-color: #00a0f0;
+}
+
 .btn-warning {
   background-color: #e4cb10;
   border-color: #d6be0f; }
@@ -647,12 +642,7 @@ fieldset[disabled] .btn {
       margin: 0;
       font-size: 18px;
       font-weight: 300; }
-    .panel .panel-heading button {
-      padding: 0;
-      margin-left: 5px;
-      background-color: transparent;
-      border: none;
-      outline: none; }
+    
       .panel .panel-heading button i {
         font-size: 14px; }
   .panel .panel-body {
@@ -702,6 +692,14 @@ fieldset[disabled] .btn {
 /********************
  * ELEMENTS
  ********************/
+select {
+    border-radius: 2px;
+    border-color: #eaeaea;
+    background-color: #fcfcfc;
+    box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
+    padding: 8px;
+}
+
 .collapsing {
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
